@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #f0f2f5; min-height: 100vh; }
+    .navbar { background: #185FA5; color: #fff; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; }
+    .navbar h1 { font-size: 20px; }
+    .logout { background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+    .logout:hover { background: rgba(255,255,255,0.3); }
+    .container { max-width: 900px; margin: 32px auto; padding: 0 16px; }
+    .welcome { background: #fff; border-radius: 12px; border: 1px solid #e0e0e0; padding: 28px 32px; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; }
+    .avatar { font-size: 48px; }
+    .welcome h2 { font-size: 22px; color: #111; margin-bottom: 4px; }
+    .welcome p { font-size: 14px; color: #666; }
+    .badge { display: inline-block; background: #e3f0fb; color: #185FA5; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat-card { background: #fff; border-radius: 12px; border: 1px solid #e0e0e0; padding: 20px 24px; }
+    .stat-card .icon { font-size: 28px; margin-bottom: 8px; }
+    .stat-card .num { font-size: 26px; font-weight: 700; color: #111; }
+    .stat-card .label { font-size: 13px; color: #666; margin-top: 2px; }
+    .section { background: #fff; border-radius: 12px; border: 1px solid #e0e0e0; padding: 24px 28px; margin-bottom: 24px; }
+    .section h3 { font-size: 16px; font-weight: 600; color: #111; margin-bottom: 16px; }
+    .subject { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+    .subject:last-child { border-bottom: none; }
+    .subject-name { font-size: 14px; color: #333; }
+    .progress-bar { width: 160px; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 4px; background: #185FA5; }
+    .grade { font-size: 13px; font-weight: 600; color: #185FA5; min-width: 32px; text-align: right; }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <h1>🎓 College Portal</h1>
+    <div style="display:flex;align-items:center;gap:16px">
+      <span id="nav-name">Student</span>
+      <button class="logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="welcome">
+      <div class="avatar">👨‍🎓</div>
+      <div>
+        <h2 id="student-name">Welcome!</h2>
+        <p id="student-roll">Roll Number: —</p>
+        <span class="badge">B.E Computer Science — 3rd Year</span>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat-card"><div class="icon">📚</div><div class="num">6</div><div class="label">Subjects</div></div>
+      <div class="stat-card"><div class="icon">✅</div><div class="num">87%</div><div class="label">Attendance</div></div>
+      <div class="stat-card"><div class="icon">🏆</div><div class="num">8.4</div><div class="label">CGPA</div></div>
+      <div class="stat-card"><div class="icon">📝</div><div class="num">3</div><div class="label">Assignments Due</div></div>
+    </div>
+    <div class="section">
+      <h3>📖 Subject Performance</h3>
+      <div class="subject"><span class="subject-name">Data Structures</span><div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div><span class="grade">A+</span></div>
+      <div class="subject"><span class="subject-name">Operating Systems</span><div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div><span class="grade">B+</span></div>
+      <div class="subject"><span class="subject-name">Database Management</span><div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div><span class="grade">A</span></div>
+      <div class="subject"><span class="subject-name">Computer Networks</span><div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div><span class="grade">B</span></div>
+      <div class="subject"><span class="subject-name">Software Engineering</span><div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div><span class="grade">A</span></div>
+      <div class="subject"><span class="subject-name">Machine Learning</span><div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div><span class="grade">A+</span></div>
+    </div>
+  </div>
+  <script>
+    const student = JSON.parse(localStorage.getItem('student') || 'null');
+    if (!student) { window.location.href = '/'; }
+    else {
+      document.getElementById('student-name').textContent = 'Welcome, ' + student.name + '!';
+      document.getElementById('student-roll').textContent = 'Roll Number: ' + student.roll_number;
+      document.getElementById('nav-name').textContent = student.name;
+    }
+    function logout() {
+      localStorage.removeItem('student');
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>
